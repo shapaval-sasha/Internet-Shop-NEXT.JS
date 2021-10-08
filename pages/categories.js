@@ -80,7 +80,7 @@ const Categories = () => {
               data-toggle="modal" data-target="#exampleModal"
               onClick={()=> dispatch({
                 type: 'ADD_MODAL',
-                payload: {data:categories, id: category._id, title:category.name, type:'ADD_CATEGORIES'}
+                payload: [{data:categories, id: category._id, title:category.name, type:'ADD_CATEGORIES'}]
               })}></i>
             </div>
           </div>

@@ -44,12 +44,12 @@ export default function ProductItem({ product, handleCheck }) {
           onClick={() =>
             dispatch({
               type: 'ADD_MODAL',
-              payload: {
+              payload: [{
                 data: product,
                 id: product._id,
                 title: product.title,
                 type: 'DELETE_PRODUCT',
-              },
+              }],
             })
           }
         >
