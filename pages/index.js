@@ -1,16 +1,30 @@
 import { getData } from '../utils/fetchData';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { DataContext } from '../store/GlobalState';
 import Head from 'next/head';
 import ProductItem from '../components/product/ProductItem';
+import filterSearch from '../utils/filterSearch'
+import { useRouter } from 'next/router';
 
 const Home = (props) => {
   const [products, setProducts] = useState(props.products);
 
   const [isCheck, setIsCheck] = useState(false);
-
+  const [page, setPage] = useState(1)
   const { state, dispatch } = useContext(DataContext);
   const { auth } = state;
+
+  const router = useRouter()
+
+  useEffect(() => {
+    setProducts(props.products)
+  }, [props.products])
+
+  useEffect(() => {
+    if(Object.keys(router.query).length === 0) {setPage(1)} else {
+      setPage(Number(router.query.page))
+    } 
+  }, [router.query])
 
   const handleCheck = (id) => {
     products.forEach((product) => {
@@ -43,6 +57,12 @@ const Home = (props) => {
       payload: deleteArr,
     })
   };
+
+  const handleLoadmore=()=>{
+    setPage (page + 1)
+    filterSearch({router, page: page + 1})
+    console.log(router);
+  }
 
   return (
     <div className="home_page">
@@ -89,13 +109,24 @@ const Home = (props) => {
           ))
         )}
       </div>
+      {
+        props.result< page *3 ? ''
+        : <button className= 'btn btn-outline-info d-block mx-auto mb-4' onClick={handleLoadmore}>Load more</button>
+      }
     </div>
   );
 };
 export default Home;
 
-export async function getServerSideProps() {
-  const res = await getData('product');
+export async function getServerSideProps({query}) {
+ const page = query.page || 1
+  const category = query.category || 'all'
+  const sort = query.sort || ''
+  const search = query.search || 'all'
+
+  const res = await getData(
+    `product?limit=${page * 3}&category=${category}&sort=${sort}&title=${search}`
+  )
   //console.log(res);
   // server side rendering
 
