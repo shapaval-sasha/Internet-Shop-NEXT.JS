@@ -1,5 +1,3 @@
-import { Query } from "mongoose"
-
 const filterSearch = ({router, page, category, sort, search})=>{
 
   const path = router.pathname

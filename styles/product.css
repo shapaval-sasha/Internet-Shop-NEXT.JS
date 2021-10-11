@@ -26,16 +26,31 @@
   -webkit-line-clamp: 3;
 }
 
-
 /*------Detail Product ----*/
 
-.detail_page .img-thumbnail.active{
+.detail_page .img-thumbnail.active {
   border-color: orangered;
   padding: 2px;
   margin-top: 5px;
 }
 
-.img_detail{
-  height:300px;
+.img_detail {
+  height: 300px;
   margin-bottom: 5px;
 }
+
+.delete_all_change {
+  display: none;
+}
+
+.delete_all {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 85%;
+  left: 70%;
+  z-index: 1000;
+  opacity: 0.9;
+  
+}
+
+
